@@ -1,6 +1,6 @@
 import pygame
 from core.gl.gl_texture import GLTexture
-from .tile import Tile, AnimatedTile
+from .tile_texture import TileTexture, AnimatedTileTexture
 
 
 class TileSet:
@@ -18,6 +18,6 @@ class TileSet:
             tile = line.split(' ')
             nums = [int(n) for n in tile[1:] if n != '']
             if len(nums) == 4:
-                self.tiles[tile[0]] = Tile(pygame.Rect(*nums))
+                self.tiles[tile[0]] = TileTexture(pygame.Rect(*nums))
             elif len(nums) == 5:
-                self.tiles[tile[0]] = AnimatedTile(pygame.Rect(*nums[:4]), nums[4])
+                self.tiles[tile[0]] = AnimatedTileTexture(pygame.Rect(*nums[:4]), nums[4])

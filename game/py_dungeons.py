@@ -16,6 +16,7 @@ class PyDungeons:
     @staticmethod
     def start():
         pygame.init()
+        pygame.display.set_caption('PyDungeon')
         size = width, height = (640, 480)
         game = Game(size)
         scene = game.scene
@@ -38,7 +39,6 @@ class PyDungeons:
         player = Entity()
         scene.add_entity(player)
 
-        print(ts.tiles["knight_f_idle_anim"])
         key_bindings = [[pygame.K_a], [pygame.K_d], [pygame.K_w], [pygame.K_s]]
 
         player.add_component(MoveComponent(5, 2))

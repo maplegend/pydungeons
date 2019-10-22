@@ -14,15 +14,13 @@ class TileMapRenderer(Renderer):
         if map is None:
             return
         tm = tmap.tile_map
-        start = pygame.Vector2(rect.x, rect.y)
-        if self.size is None:
-            scale = pygame.Vector2(rect.width/len(tm[0]), rect.height/len(tm))
-        else:
-            scale = pygame.Vector2(rect.width / self.size[0], self.size[1])
-        for y, row in enumerate(tm):
-            for x, tiles in enumerate(row):
+        for row in tm:
+            for tiles in row:
                 for tile in tiles:
-                    TileRenderer.render_tile(tile, tmap.tileset, start + pygame.Vector2(x*scale.x, y*scale.y), scale)
+                    TileRenderer.render_tile(tile.texture,
+                                             tmap.tileset,
+                                             pygame.Vector2(tile.rect.x, tile.rect.y),
+                                             pygame.Vector2(tile.rect.width, tile.rect.height))
 
 
 

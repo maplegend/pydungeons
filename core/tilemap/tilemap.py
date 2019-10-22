@@ -1,6 +1,7 @@
 import pygame
 from core.component import Component
 from core.components.transform import TransformComponent
+from .tile import Tile
 
 
 class TileMap(Component):
@@ -16,17 +17,18 @@ class TileMap(Component):
         self.tile_map = [[] for _ in range(len(tmap))]
         for i, row in enumerate(tmap):
             for col in row:
-                self.tile_map[i].append([self.tileset.tiles[tiles[t]] for t in col])
+                self.tile_map[i].append([Tile(self.tileset.tiles[tiles[t]]) for t in col])
 
     def calculate_rects(self):
         rect = self.entity.get_component(TransformComponent).rect
         if not self.tile_map:
             return
-        tile_width, tile_height = (rect.width / len(self.tiles[0]), rect.height / len(self.tiles))
+        tile_width, tile_height = (rect.width / len(self.tile_map[0]), rect.height / len(self.tile_map))
         self.tile_size = (tile_width, tile_height)
-        for y in range(len(self.tiles)):
-            for x in range(len(self.tiles[y])):
-                self.tiles[y][x].rect = pygame.Rect((x * tile_width, y * tile_height, tile_width, tile_height))
+        for y in range(len(self.tile_map)):
+            for x in range(len(self.tile_map[y])):
+                for i in range(len(self.tile_map[y][x])):
+                    self.tile_map[y][x][i].rect = pygame.Rect((x * tile_width, y * tile_height, tile_width, tile_height))
 
     def applied_on_entity(self, entity):
         self.entity = entity

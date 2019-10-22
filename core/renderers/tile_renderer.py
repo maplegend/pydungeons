@@ -1,6 +1,6 @@
 import pygame
 from core.renderer import Renderer
-from core.tilemap.tile import AnimatedTile
+from core.tilemap.tile_texture import AnimatedTileTexture
 from OpenGL.GL import *
 
 
@@ -13,7 +13,7 @@ class TileRenderer(Renderer):
 
     def render(self, entity, rect):
         self.render_tile(self.tile, self.tileset, pygame.Vector2(rect.x, rect.y), pygame.Vector2(rect.width, rect.height), int(self.frame))
-        if self.animate and isinstance(self.tile, AnimatedTile):
+        if self.animate and isinstance(self.tile, AnimatedTileTexture):
             self.frame += 0.1
             if int(self.frame) > self.tile.frames:
                 self.frame = 0

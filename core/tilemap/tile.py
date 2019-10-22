@@ -1,9 +1,7 @@
+import pygame
+
+
 class Tile:
-    def __init__(self, rect):
+    def __init__(self, texture, rect=pygame.Rect(0, 0, 0, 0)):
         self.rect = rect
-
-
-class AnimatedTile(Tile):
-    def __init__(self, rect, frames):
-        super().__init__(rect)
-        self.frames = frames
+        self.texture = texture
