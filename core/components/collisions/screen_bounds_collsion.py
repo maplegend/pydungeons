@@ -1,4 +1,4 @@
-from ..collision_handler import CollisionsHandler
+from core.collision_handler import CollisionsHandler
 
 
 class ScreenBoundsCollisionHandler(CollisionsHandler):

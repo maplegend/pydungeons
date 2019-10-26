@@ -9,22 +9,24 @@ class Rect(pygame.Rect):
         else:
             super().__init__(x, y, w, h)
 
+    @property
     def xy(self):
         return self.x, self.y
 
+    @property
     def size(self):
         return self.width, self.height
 
-    def intersect_point(self, line):
-        if not self.collidepoint(line.end.xy):
+    def intersect_line(self, line):
+        if not self.collidepoint(*line.end.xy):
             return None
-        for ed in self.edges():
+        for ed in self.edges:
             p = ed.intersection_point(line)
             if p is not None:
                 return p
         return None
 
-
+    @property
     def edges(self):
         return [
             LineSegment((self.x, self.y), (self.x+self.w, self.y)),

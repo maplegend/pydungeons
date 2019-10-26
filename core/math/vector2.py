@@ -8,5 +8,6 @@ class Vector2(pygame.Vector2):
         else:
             super().__init__(x, y)
 
+    @property
     def xy(self):
         return self.x, self.y

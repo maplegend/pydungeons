@@ -1,4 +1,4 @@
-import pygame
+from core.math.rect import Rect
 from .collider import Collider
 from ..transform import TransformComponent
 
@@ -14,4 +14,4 @@ class BoxCollider(Collider):
 
     def get_collider(self):
         trans = self.entity.get_component(TransformComponent)
-        return pygame.Rect(trans.rect.x, trans.rect.y, self.size[0], self.size[1])
+        return Rect(trans.x, trans.y, self.size[0], self.size[1])

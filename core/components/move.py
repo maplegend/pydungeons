@@ -2,7 +2,7 @@ import pygame
 from ..component import Component
 from .transform import TransformComponent
 from ..events.update import UpdateEvent
-from .collision_handler import CollisionsHandler
+from core.collision_handler import CollisionsHandler
 
 
 class MoveComponent(Component):
