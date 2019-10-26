@@ -7,6 +7,7 @@ from .tile import Tile
 class TileMap(Component):
     def __init__(self, tileset, tile_map=None):
         self.tile_size = None
+        self.entity = None
         self.tileset = tileset
         if tile_map is None:
             self.tile_map = []
@@ -17,7 +18,7 @@ class TileMap(Component):
         self.tile_map = [[] for _ in range(len(tmap))]
         for i, row in enumerate(tmap):
             for col in row:
-                self.tile_map[i].append([Tile(self.tileset.tiles[tiles[t]]) for t in col])
+                self.tile_map[i].append([Tile(self.tileset.tiles[tiles[t]], tiles[t]) for t in col])
 
     def calculate_rects(self):
         rect = self.entity.get_component(TransformComponent).rect
@@ -44,6 +45,6 @@ class TileMap(Component):
         res_tiles = [self.tile_map[start_pos[1]][start_pos[0]]]
         dirs = [(1, 1), (1, -1), (-1, 1), (-1, -1), (0, 1), (0, -1), (1, 0), (-1, 0)]
         for d in dirs:
-            if 0 <= start_pos[0] + d[0] < len(self.tile_map[0]) and 0 <= start_pos[1] + d[1] < len(self.tiles):
+            if 0 <= start_pos[0] + d[0] < len(self.tile_map[0]) and 0 <= start_pos[1] + d[1] < len(self.tile_map):
                 res_tiles.append(self.tile_map[start_pos[1] + d[1]][start_pos[0] + d[0]])
         return res_tiles
