@@ -1,7 +1,7 @@
 from .collider import Collider
 
 
-class TileMapCollisionHandler(Collider):
+class TileMapCollider(Collider):
     def __init__(self, tile_map, collisions_tiles):
         super().__init__()
         self.col_tiles = collisions_tiles

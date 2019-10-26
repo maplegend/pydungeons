@@ -2,7 +2,6 @@ import pygame
 from OpenGL.GL import *
 from .components.renderer_component import RendererComponent
 from .components.transform import TransformComponent
-from .components.renderer_effect import RendererEffect
 
 
 class GameRender:
