@@ -12,42 +12,21 @@ class TileRenderer(Renderer):
         self.animate = animate
 
     def render(self, entity, rect):
-        self.render_tile(self.tile, self.tileset, pygame.Vector2(rect.x, rect.y), pygame.Vector2(rect.width, rect.height), int(self.frame))
+        if not self.tile.is_baked or self.tile.size != rect.size:
+            self.tile.bake(self.tileset, rect.size)
+
+        self.render_tile(self.tile, pygame.Vector2(rect.x, rect.y), int(self.frame))
         if self.animate and isinstance(self.tile, AnimatedTileTexture):
             self.frame += 0.1
-            if int(self.frame) > self.tile.frames:
+            if int(self.frame) >= self.tile.frames:
                 self.frame = 0
 
     @staticmethod
-    def render_tile(tile, tileset, pos, size, frame=0):
+    def render_tile(tile, pos, frame=0):
+        glLoadIdentity()
+        glTranslate(pos.x, pos.y, 0)
         if frame > 0:
-            x = (tile.rect.x+tile.rect.width*frame) / tileset.width
+            glCallList(tile.display_lists[frame])
         else:
-            x = tile.rect.x / tileset.width
-        y = 1. - tile.rect.y / tileset.height
-        w = tile.rect.width / tileset.width
-        h = tile.rect.height / tileset.height
-        glEnable(GL_TEXTURE_2D)
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE)
-        glBindTexture(GL_TEXTURE_2D, tileset.texture)
-
-        # Draw the tile
-        glBegin(GL_QUADS)
-
-        # Upper left corner
-        glTexCoord2f(x, y)
-        glVertex2f(pos.x, pos.y)
-
-        # Lower left corner
-        glTexCoord2f(x, y - h)
-        glVertex2f(pos.x, pos.y + size.y)
-
-        # Lower right corner
-        glTexCoord2f(x + w, y - h)
-        glVertex2f(pos.x + size.x, pos.y + size.y)
-
-        # Upper right corner
-        glTexCoord2f(x + w, y)
-        glVertex2f(pos.x + size.x, pos.y)
-
-        glEnd()
+            glCallList(tile.display_list)
+        glTranslate(-pos.x, -pos.y, 0)

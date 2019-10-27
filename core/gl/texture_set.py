@@ -6,8 +6,8 @@ class TextureSet:
     def __init__(self):
         self.textures = {}
 
-    def load(self, texname=None, texappend=".png"):
-        self.textures[texname] = GLTexture(texname, texappend)
+    def load(self, texname=None):
+        self.textures[texname] = GLTexture(texname)
 
     def set(self, texname, data):
         self.textures[texname] = data

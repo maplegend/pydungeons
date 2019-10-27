@@ -5,10 +5,11 @@ from .tile import Tile
 
 
 class TileMap(Component):
-    def __init__(self, tileset, tile_map=None):
+    def __init__(self, tileset, size, tile_map=None):
         self.tile_size = None
         self.entity = None
         self.tileset = tileset
+        self.size = size
         if tile_map is None:
             self.tile_map = []
         else:
@@ -21,15 +22,15 @@ class TileMap(Component):
                 self.tile_map[i].append([Tile(self.tileset.tiles[tiles[t]], tiles[t]) for t in col])
 
     def calculate_rects(self):
-        rect = self.entity.get_component(TransformComponent).rect
+        pos = self.entity.get_component(TransformComponent).pos
         if not self.tile_map:
             return
-        tile_width, tile_height = (rect.width / len(self.tile_map[0]), rect.height / len(self.tile_map))
+        tile_width, tile_height = (self.size[0] / len(self.tile_map[0]), self.size[0] / len(self.tile_map))
         self.tile_size = (tile_width, tile_height)
         for y in range(len(self.tile_map)):
             for x in range(len(self.tile_map[y])):
                 for i in range(len(self.tile_map[y][x])):
-                    self.tile_map[y][x][i].rect = pygame.Rect((x * tile_width, y * tile_height, tile_width, tile_height))
+                    self.tile_map[y][x][i].rect = pygame.Rect((pos.x + x * tile_width, pos.y + y * tile_height, tile_width, tile_height))
 
     def applied_on_entity(self, entity):
         self.entity = entity

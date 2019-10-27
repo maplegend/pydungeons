@@ -10,6 +10,7 @@ class TileMapCollider(Collider):
 
     def applied_on_entity(self, entity):
         self.entity = entity
+        super().applied_on_entity(entity)
 
     def get_collider(self):
         tiles = self.tile_map.tile_map
@@ -17,8 +18,10 @@ class TileMapCollider(Collider):
             return False
 
         rects = []
-        for tiles in tiles:
-            for tile in tiles:
-                if tile.name in self.col_tiles:
-                    rects.append(tile.rect)
+        for row in tiles:
+            for column in row:
+                for tile in column:
+                    if tile.name in self.col_tiles:
+                        rects.append(tile.rect)
+
         return rects

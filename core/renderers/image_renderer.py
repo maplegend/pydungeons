@@ -36,7 +36,7 @@ class ImageRenderer(Renderer):
         glColor4fv((1, 1, 1, 1))
 
         glLoadIdentity()
-        glTranslate(0, 0, 0)
+        glTranslate(rect.x, rect.y, 0)
 
         glCallList(self.texture.displaylist)
-    #glTranslate(-rect.x, -rect.y, 0)
+        glTranslate(-rect.x, -rect.y, 0)

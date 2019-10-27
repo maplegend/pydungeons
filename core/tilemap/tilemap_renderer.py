@@ -17,10 +17,9 @@ class TileMapRenderer(Renderer):
         for row in tm:
             for tiles in row:
                 for tile in tiles:
-                    TileRenderer.render_tile(tile.texture,
-                                             tmap.tileset,
-                                             pygame.Vector2(tile.rect.x, tile.rect.y),
-                                             pygame.Vector2(tile.rect.width, tile.rect.height))
+                    if not tile.texture.is_baked:
+                        tile.texture.bake(tmap.tileset, (tile.rect.width, tile.rect.height))
+                    TileRenderer.render_tile(tile.texture, pygame.Vector2(tile.rect.x, tile.rect.y))
 
 
 

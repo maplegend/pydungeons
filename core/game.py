@@ -5,6 +5,7 @@ from .event_manager import EventManager
 from .game_screen import GameScreen
 from .game_renderer import GameRender
 from .scene import Scene
+from .collision_handler import CollisionsHandler
 from .events.key_press import KeyPressEvent
 from .events.key_pressed import KeyPressedEvent
 from .events.update import UpdateEvent
@@ -17,14 +18,14 @@ class Game(Entity):
         self.game_screen = GameScreen(screen_size)
         self.renderer = GameRender(self)
         self.scene = Scene(self)
-        self.pipeline = pipeline if pipeline is None else self.default_pipeline
+        self.collision_handler = CollisionsHandler()
+        self.pipeline = pipeline if pipeline is not None else self.default_pipeline()
 
-    @property
     @staticmethod
     def default_pipeline():
         return [
             Game.handle_event,
-            Game.handle_event,
+            Game.handle_key_press,
             Game.trigger_game_tick,
             Game.render
         ]
@@ -33,6 +34,7 @@ class Game(Entity):
     def handle_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self.renderer.stopwatch.save("renderer_timings.txt")
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 self.event_manager.trigger_event(KeyPressEvent(event.key))

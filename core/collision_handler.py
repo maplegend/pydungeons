@@ -9,9 +9,14 @@ class CollisionsHandler:
     def check_collision(self, line):
         for coll in self.colliders:
             r = coll.get_collider()
-            if not isinstance(r, Rect):
-                r = r[0].unionall(r[1:])
-            return r.intersect_line(line)
+            if isinstance(r, Rect):
+                return r.intersect_line(line)
+
+            for rect in r:
+                intr = r.intersect_line(line)
+                if intr is not None:
+                    return intr
+            return None
 
     def add_collider(self, collider):
         self.colliders.append(collider)

@@ -1,3 +1,4 @@
+import pygame
 from .vector2 import Vector2
 
 
@@ -9,7 +10,7 @@ class LineSegment:
         :param x1: none or x1
         :param y1: none or y1
         """
-        if isinstance(start, Vector2) and isinstance(end, Vector2):
+        if isinstance(start, pygame.Vector2) and isinstance(end, pygame.Vector2):
             self.start = start
             self.end = end
         elif isinstance(start, tuple) and isinstance(end, tuple):

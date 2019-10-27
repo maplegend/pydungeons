@@ -11,6 +11,7 @@ class BoxCollider(Collider):
 
     def applied_on_entity(self, entity):
         self.entity = entity
+        super().applied_on_entity(entity)
 
     def get_collider(self):
         trans = self.entity.get_component(TransformComponent)
