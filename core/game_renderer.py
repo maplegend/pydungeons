@@ -1,6 +1,6 @@
 import pygame
 from OpenGL.GL import *
-from .components.renderer_component import RendererComponent
+from .components.renderer import RendererComponent
 from .components.transform import TransformComponent
 from .stopwatch import Stopwatch
 from .components.name import NameComponent

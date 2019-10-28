@@ -60,7 +60,6 @@ class AnimatedTileTexture(TileTexture):
     def bake(self, tileset, size):
         for f in range(self.frames):
             super().bake(tileset, size)
-            self.rect.move_ip((self.rect.width*f, 0))
+            self.rect.move_ip((self.rect.width, 0))
             self.display_lists.append(self.display_list)
         self.rect.move_ip((-self.rect.width*self.frames, 0))
-        print(len(self.display_lists))

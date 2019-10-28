@@ -1,7 +1,7 @@
 import pygame
 from core.game import Game
 from core.entity import Entity
-from core.components.renderer_component import RendererComponent
+from core.components.renderer import RendererComponent
 from core.components.transform import TransformComponent
 from core.components.exit_on_escape import ExitOnEscape
 from core.components.move import MoveComponent

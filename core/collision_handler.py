@@ -8,12 +8,12 @@ class CollisionsHandler:
 
     def check_collision(self, line):
         for coll in self.colliders:
-            r = coll.get_collider()
-            if isinstance(r, Rect):
-                return r.intersect_line(line)
+            #r = coll.get_collider()
+            if isinstance(coll, Rect):
+                return coll.intersect_line(line)
 
-            for rect in r:
-                intr = r.intersect_line(line)
+            for rect in coll:
+                intr = rect.intersect_line(line)
                 if intr is not None:
                     return intr
             return None

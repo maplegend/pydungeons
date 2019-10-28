@@ -18,7 +18,22 @@ def test_collision():
     ent.add_component(TransformComponent(Vector2(1, 1)))
     col = BoxCollider((10, 10))
     ent.add_component(col)
+    assert g.collision_handler.colliders == [col.get_collider()]
     line = LineSegment(0, 0, 5, 5)
 
     assert g.collision_handler.check_collision(line) == Vector2(1, 1)
+
+
+def test_collision2():
+    pygame.init()
+    g = Game((640, 480))
+    ent = Entity()
+    g.scene.add_entity(ent)
+    ent.add_component(TransformComponent(Vector2(10, 0)))
+    col = BoxCollider((10, 10))
+    ent.add_component(col)
+    assert g.collision_handler.colliders == [col.get_collider()]
+    line = LineSegment(0, 5, 15, 5)
+
+    assert g.collision_handler.check_collision(line) == Vector2(10, 5)
 

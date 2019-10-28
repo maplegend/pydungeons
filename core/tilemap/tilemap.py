@@ -2,6 +2,7 @@ import pygame
 from core.component import Component
 from core.components.transform import TransformComponent
 from .tile import Tile
+from core.math.rect import Rect
 
 
 class TileMap(Component):
@@ -30,7 +31,10 @@ class TileMap(Component):
         for y in range(len(self.tile_map)):
             for x in range(len(self.tile_map[y])):
                 for i in range(len(self.tile_map[y][x])):
-                    self.tile_map[y][x][i].rect = pygame.Rect((pos.x + x * tile_width, pos.y + y * tile_height, tile_width, tile_height))
+                    self.tile_map[y][x][i].rect = Rect(pos.x + x * tile_width,
+                                                       pos.y + y * tile_height,
+                                                       tile_width,
+                                                       tile_height)
 
     def applied_on_entity(self, entity):
         self.entity = entity
