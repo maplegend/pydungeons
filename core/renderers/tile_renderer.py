@@ -33,7 +33,5 @@ class TileRenderer(Renderer):
             glCallList(tile.display_lists[frame])
         else:
             glCallList(tile.display_list)
-        #glTranslate(-pos.x, -pos.y, 0)
         glPopMatrix()
-       # if flip:
-        #    glScalef(1., 1., 1.)
+

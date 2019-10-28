@@ -15,7 +15,10 @@ class TileTexture:
         self.size = size
         self.display_list = glGenLists(1)
         glNewList(self.display_list, GL_COMPILE)
+        self.render(tileset, size)
+        glEndList()
 
+    def render(self, tileset, size):
         x = self.rect.x / tileset.width
         y = 1. - self.rect.y / tileset.height
         w = self.rect.width / tileset.width
@@ -44,7 +47,6 @@ class TileTexture:
         glVertex2f(size[0], 0)
 
         glEnd()
-        glEndList()
 
 
 class AnimatedTileTexture(TileTexture):
