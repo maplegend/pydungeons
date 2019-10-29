@@ -38,3 +38,9 @@ def test_intersect_line4():
     line = LineSegment(Vector2(0, 0), Vector2(-5, -5))
     rect = Rect(-5, -5, 11, 11)
     assert rect.intersect_line(line) == Vector2(-5, -5)
+
+
+def test_intersect_line5():
+    line = LineSegment(Vector2(0, 5), Vector2(13, 5))
+    rect = Rect(5, 0, 11, 11)
+    assert rect.intersect_line(line) == Vector2(5, 5)

@@ -59,7 +59,7 @@ class PyDungeons:
 
         key_bindings = [[pygame.K_a], [pygame.K_d], [pygame.K_w], [pygame.K_s]]
 
-        player.add_component(MoveComponent(5, 2))
+        player.add_component(MoveComponent(1, 2))
         player.add_component(KeyControlComponent(key_bindings))
         #player.add_component(ScreenBoundsCollisionHandler(pygame.Rect(0, 0, width, height)))
         player.add_component(TileMapCollider(tm, ["wall_mid"]))
