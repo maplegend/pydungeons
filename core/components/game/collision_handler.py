@@ -7,17 +7,17 @@ class GameCollisionsHandlerComponent(GameComponent):
     def __init__(self):
         self.colliders = []
         self.rects = set()
-        self.chunk_size = 10
+        self.chunk_size = 100
         self.static_collision_map = {}
 
     def check_rect_collision(self, rect, exceptions=[]):
-        colliders = set()
+        colls = set()
         for c in rect.corners:
             rects = self._get_rects_by_position(c)
             if rects is not None:
-                colliders.update(rects)
-        colliders.update(self.rects)
-        for col in colliders:
+                colls.update(rects)
+        colls.update(self.rects)
+        for col in colls:
             if rect != col and col not in exceptions and rect.colliderect(col):
                 return True
         return False
@@ -46,13 +46,13 @@ class GameCollisionsHandlerComponent(GameComponent):
     def _add_rect_by_position(self, position, rect):
         pos = (position[0] // self.chunk_size, position[1] // self.chunk_size)
         if pos not in self.static_collision_map:
-            self.static_collision_map[pos] = set(rect)
-        else:
-            self.static_collision_map[pos].add(rect)
+            self.static_collision_map[pos] = set()
+
+        self.static_collision_map[pos].add(rect)
 
     def add_static_collider(self, collider):
-        r = collider.get_collider()
-        [self._add_rect_by_position(c, r) for c in r.corners]
+        for r in collider.get_collider():
+            [self._add_rect_by_position(c, r) for c in r.corners]
 
     def game_tick(self):
         self.rects = set()

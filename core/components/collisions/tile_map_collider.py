@@ -10,7 +10,7 @@ class TileMapCollider(Collider):
 
     def applied_on_entity(self, entity):
         self.entity = entity
-        super().applied_on_entity(entity)
+        super().applied_on_entity(entity, True)
 
     def get_collider(self):
         tiles = self.tile_map.tile_map
