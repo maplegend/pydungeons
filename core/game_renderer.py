@@ -3,7 +3,6 @@ from OpenGL.GL import *
 from .components.renderer import RendererComponent
 from .components.transform import TransformComponent
 from .stopwatch import Stopwatch
-from .components.name import NameComponent
 
 
 class GameRender:

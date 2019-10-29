@@ -17,6 +17,10 @@ class Rect(pygame.Rect):
     def size(self):
         return self.width, self.height
 
+    @property
+    def corners(self):
+        return [self.topright, self.bottomright, self.topleft, self.bottomleft]
+
     def intersect_line(self, line):
         if not self.collidepoint(*line.end.xy):
             return None
@@ -34,3 +38,9 @@ class Rect(pygame.Rect):
             LineSegment((self.x + self.w, self.y + self.h), (self.x, self.y+self.h)),
             LineSegment((self.x, self.y+self.h), (self.x, self.y)),
         ]
+
+    def __hash__(self):
+        return hash((self.x, self.y, self.w, self.h))
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y and self.w == other.w and self.h == other.h

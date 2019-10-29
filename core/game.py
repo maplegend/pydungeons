@@ -2,7 +2,7 @@ import pygame
 from .entity import Entity
 from .game_component import GameComponent
 from .scene import Scene
-from .collision_handler import CollisionsHandler
+from core.components.game.collision_handler import GameCollisionsHandlerComponent
 from .components.game.game_event_manager import GameEventManagerComponent
 from .components.game.game_event_handler import GameEventHandlerComponent
 from .components.game.game_key_press import GameKeyPressComponent
@@ -15,7 +15,6 @@ class Game(Entity):
         super().__init__()
 
         self.scene = Scene(self)
-        self.collision_handler = CollisionsHandler()
         self.cached = []
         self.chash = 0
 
@@ -25,6 +24,7 @@ class Game(Entity):
         self.add_component(GameKeyPressComponent())
         self.add_component(GameTickTriggerComponent())
         self.add_component(GameRendererComponent(screen_size))
+        self.add_component(GameCollisionsHandlerComponent())
 
     def game_tick(self):
         comps = self.get_components(GameComponent)

@@ -15,4 +15,4 @@ class BoxCollider(Collider):
 
     def get_collider(self):
         trans = self.entity.get_component(TransformComponent)
-        return Rect(trans.x, trans.y, self.size[0], self.size[1])
+        return [Rect(trans.x, trans.y, self.size[0], self.size[1])]

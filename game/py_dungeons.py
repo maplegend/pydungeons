@@ -7,7 +7,7 @@ from core.components.exit_on_escape import ExitOnEscape
 from core.components.move import MoveComponent
 from core.components.key_control import KeyControlComponent
 from core.components.collisions.tile_map_collider import TileMapCollider
-from core.components.collisions.screen_bounds_collsion import ScreenBoundsCollisionHandler
+from core.components.collisions.box_collider import BoxCollider
 from core.components.name import NameComponent
 from core.tilemap.tilemap import TileMap
 from core.tilemap.tileset import TileSet
@@ -52,7 +52,9 @@ class PyDungeons:
         PyDungeons.build_wall_rect(mp, pygame.Rect(2, 2, 10, 10))
         tm.load_letters(mp, {"W": "wall_mid", "F": "floor_1", "T": "wall_top_mid"})
         tilemap.add_component(tm)
+        tilemap.add_component(TileMapCollider(tm, ["wall_mid"]))
         tilemap.add_component(RendererComponent(TileMapRenderer(), size))
+
 
         player = Entity()
         scene.add_entity(player)
@@ -63,8 +65,8 @@ class PyDungeons:
         player.add_component(MoveComponent(1, 2))
         player.add_component(KeyControlComponent(key_bindings))
         #player.add_component(ScreenBoundsCollisionHandler(pygame.Rect(0, 0, width, height)))
-        player.add_component(TileMapCollider(tm, ["wall_mid"]))
         player.add_component(TransformComponent(Vector2(100, 100)))
+        player.add_component(BoxCollider((16*2, 28*2)))
         player.add_component(RendererComponent(TileRenderer(ts.tiles["knight_f_idle_anim"], ts), (16*2, 28*2)))
         #player.add_component(RendererComponent(ImageRenderer("assets/tileset.png"), (1000, 1000)))
 

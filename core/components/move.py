@@ -1,11 +1,11 @@
 from ..component import Component
 from .transform import TransformComponent
 from ..events.update import UpdateEvent
-from core.collision_handler import CollisionsHandler
-from core.math.line_segment import LineSegment
 from core.math.vector2 import Vector2
+from .collisions.collider import Collider
 from .renderer import RendererComponent
 from core.renderers.tile_renderer import TileRenderer
+from .game.collision_handler import GameCollisionsHandlerComponent
 
 
 class MoveComponent(Component):
@@ -45,14 +45,22 @@ class MoveComponent(Component):
             self.velocity = self.direction*self.max_speed
         else:
             self.velocity += self.direction * self.acceleration
+        rect = self.entity.get_component(Collider).get_collider()[0]
 
-        line = LineSegment(trans.pos, trans.pos+self.velocity)
-        col_point = self.entity.scene.game.collision_handler.check_collision(line)
-        if col_point is not None:
-            pass
-            #trans.position = col_point
-        else:
+        ch = self.entity.scene.game.get_component(GameCollisionsHandlerComponent)
+        if ch is None:
             trans.position = trans.pos + self.velocity
+            self.direction *= 0
+            return
+
+        move_x = False
+        if not ch.check_rect_collision(rect.move(self.velocity.x, 0), [rect]):
+            trans.position.x += self.velocity.x
+            move_x = True
+
+        if not ch.check_rect_collision(rect.move(self.velocity.x if move_x else 0, self.velocity.y), [rect]):
+            trans.position.y += self.velocity.y
+
         self.direction *= 0
 
     def applied_on_entity(self, entity):
