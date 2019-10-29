@@ -1,61 +1,40 @@
 import pygame
-import sys
 from .entity import Entity
-from .event_manager import EventManager
-from .game_screen import GameScreen
-from .game_renderer import GameRender
+from .game_component import GameComponent
 from .scene import Scene
 from .collision_handler import CollisionsHandler
-from .events.key_press import KeyPressEvent
-from .events.key_pressed import KeyPressedEvent
-from .events.update import UpdateEvent
+from .components.game.game_event_manager import GameEventManagerComponent
+from .components.game.game_event_handler import GameEventHandlerComponent
+from .components.game.game_key_press import GameKeyPressComponent
+from .components.game.game_tick_trigger import GameTickTriggerComponent
+from .components.game.game_render import GameRendererComponent
 
 
 class Game(Entity):
-    def __init__(self, screen_size, pipeline=None):
+    def __init__(self):
         super().__init__()
-        self.event_manager = EventManager()
-        self.game_screen = GameScreen(screen_size)
-        self.renderer = GameRender(self)
+
         self.scene = Scene(self)
         self.collision_handler = CollisionsHandler()
-        self.pipeline = pipeline if pipeline is not None else self.default_pipeline()
+        self.cached = []
+        self.chash = 0
 
-    @staticmethod
-    def default_pipeline():
-        return [
-            Game.handle_event,
-            Game.handle_key_press,
-            Game.trigger_game_tick,
-            Game.render
-        ]
-
-    @staticmethod
-    def handle_event(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.renderer.stopwatch.save("renderer_timings.txt")
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                self.event_manager.trigger_event(KeyPressEvent(event.key))
-
-    @staticmethod
-    def handle_key_press(self):
-        for i, k in enumerate(pygame.key.get_pressed()):
-            if k != 0:
-                self.event_manager.trigger_event(KeyPressedEvent(i))
-
-    @staticmethod
-    def trigger_game_tick(self):
-        self.event_manager.trigger_event(UpdateEvent())
-
-    @staticmethod
-    def render(self):
-        self.renderer.draw()
+    def setup_default_components(self, screen_size):
+        self.add_component(GameEventManagerComponent())
+        self.add_component(GameEventHandlerComponent())
+        self.add_component(GameKeyPressComponent())
+        self.add_component(GameTickTriggerComponent())
+        self.add_component(GameRendererComponent(screen_size))
 
     def game_tick(self):
-        for handler in self.pipeline:
-            handler(self)
+        comps = self.get_components(GameComponent)
+        nhash = hash(tuple(comps))
+        if self.chash != nhash:
+            self.chash = nhash
+            self.cached = comps
+
+        for comp in comps:
+            comp.game_tick()
 
     def run(self):
         clock = pygame.time.Clock()

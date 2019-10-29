@@ -1,4 +1,5 @@
 from .component_storage import ComponentStorage
+from core.components.game.game_event_manager import GameEventManagerComponent
 
 
 class Entity:
@@ -24,3 +25,7 @@ class Entity:
 
     def get_components(self, component):
         return self._storage.get_component(component)
+
+    @property
+    def event_manager(self):
+        return self.scene.game.get_component(GameEventManagerComponent)

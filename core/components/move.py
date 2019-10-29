@@ -57,5 +57,4 @@ class MoveComponent(Component):
 
     def applied_on_entity(self, entity):
         self.entity = entity
-        event_manager = entity.scene.game.event_manager
-        event_manager.bind(UpdateEvent, self.update)
+        entity.event_manager.bind(UpdateEvent, self.update)

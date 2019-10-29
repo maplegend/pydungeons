@@ -33,7 +33,8 @@ class PyDungeons:
         pygame.init()
         pygame.display.set_caption('PyDungeon')
         size = width, height = (640, 480)
-        game = Game(size)
+        game = Game()
+        game.setup_default_components(size)
         scene = game.scene
 
         tilemap = Entity()
