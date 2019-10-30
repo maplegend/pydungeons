@@ -10,7 +10,9 @@ class GameCollisionsHandlerComponent(GameComponent):
         self.chunk_size = 100
         self.static_collision_map = {}
 
-    def check_rect_collision(self, rect, exceptions=[]):
+    def check_rect_collision(self, rect, exceptions=None):
+        if exceptions is None:
+            exceptions = []
         colls = set()
         for c in rect.corners:
             rects = self._get_rects_by_position(c)

@@ -55,7 +55,6 @@ class PyDungeons:
         tilemap.add_component(TileMapCollider(tm, ["wall_mid"]))
         tilemap.add_component(RendererComponent(TileMapRenderer(), size))
 
-
         player = Entity()
         scene.add_entity(player)
         player.add_component(NameComponent("player"))
@@ -66,7 +65,7 @@ class PyDungeons:
         player.add_component(KeyControlComponent(key_bindings))
         #player.add_component(ScreenBoundsCollisionHandler(pygame.Rect(0, 0, width, height)))
         player.add_component(TransformComponent(Vector2(100, 100)))
-        player.add_component(BoxCollider((16*2, 28*2)))
+        player.add_component(BoxCollider((16*2, 22*2), Vector2(0, 12)))
         player.add_component(RendererComponent(TileRenderer(ts.tiles["knight_f_idle_anim"], ts), (16*2, 28*2)))
         #player.add_component(RendererComponent(ImageRenderer("assets/tileset.png"), (1000, 1000)))
 
