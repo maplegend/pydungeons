@@ -14,6 +14,7 @@ class TileMapCollider(Collider):
 
     def get_collider(self):
         tiles = self.tile_map.tile_map
+        ts = self.tile_map.tileset
         if tiles is None:
             return False
 
@@ -22,6 +23,7 @@ class TileMapCollider(Collider):
             for column in row:
                 for tile in column:
                     if tile.name in self.col_tiles:
-                        rects.append(tile.rect)
+                        rects.append(ts.colliders[tile.name].move(tile.rect.xy)
+                                     if tile.name in ts.colliders else tile.rect)
 
         return rects

@@ -44,8 +44,8 @@ floor_spikes_anim 16 176 16 16 4
 
 wall_side_top_left 0 112 16 16
 wall_side_top_right 16 112 16 16
-wall_side_mid_left 0 128 16 16
-wall_side_mid_right 16 128 16 16
+wall_side_mid_left 0 128 16 16 20 0 4 16
+wall_side_mid_right 16 128 16 16 0 0 4 16
 wall_side_front_left 0 144 16 16
 wall_side_front_right 16 144 16 16
 
