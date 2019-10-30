@@ -1,4 +1,5 @@
 import pygame
+import random
 from core.game import Game
 from core.entity import Entity
 from core.components.renderer import RendererComponent
@@ -23,10 +24,22 @@ class PyDungeons:
     def build_wall_rect(map, rect):
         for y in range(rect.height):
             if y == 0 or y == rect.height-1:
-                for x in range(1, rect.width-1):
-                    map[rect.y + y][rect.x + x] = "W"
-            map[rect.y + y][rect.x] = "W"
-            map[rect.y + y][rect.right-1] = "W"
+                for x in range(0, rect.width):
+                    map[rect.y + y][rect.x + x] = ["wall_mid"]
+                    map[rect.y + y-1][rect.x + x] = ["floor_1", "wall_top_mid"]
+            if y == rect.height - 1:
+                continue
+            map[rect.y + y][rect.x] = ["floor_1", "wall_side_mid_right"]
+            map[rect.y + y][rect.right-1] = ["floor_1", "wall_side_mid_left"]
+
+        map[rect.y-1][rect.x] = ["floor_1", "wall_corner_top_left"]
+        map[rect.y][rect.x] = ["wall_corner_left"]
+
+        map[rect.y - 1][rect.right-1] = ["floor_1", "wall_corner_top_right"]
+        map[rect.y][rect.right-1] = ["wall_corner_right"]
+
+        map[rect.bottom-2][rect.x] = ["floor_1", "wall_corner_bottom_left"]
+        map[rect.bottom-2][rect.right - 1] = ["floor_1", "wall_corner_bottom_right"]
 
     @staticmethod
     def start():
@@ -46,13 +59,11 @@ class PyDungeons:
         ts = TileSet()
         ts.load("assets/tileset.png", "assets/tileinfo.info")
         tm = TileMap(ts, size)
-        mp = [[["F"] for _ in range(30)] for _ in range(20)]
-        mp[1][0] = "W"
-        mp[0][0] = ["F", "T"]
+        mp = [[["floor_"+str(random.randrange(1, 8))] for _ in range(24)] for _ in range(24)]
         PyDungeons.build_wall_rect(mp, pygame.Rect(2, 2, 10, 10))
-        tm.load_letters(mp, {"W": "wall_mid", "F": "floor_1", "T": "wall_top_mid"})
+        tm.load_letters(mp)
         tilemap.add_component(tm)
-        tilemap.add_component(TileMapCollider(tm, ["wall_mid"]))
+        tilemap.add_component(TileMapCollider(tm, ["wall_mid", "wall_side_mid_right", "wall_side_mid_left"]))
         tilemap.add_component(RendererComponent(TileMapRenderer(), size))
 
         player = Entity()

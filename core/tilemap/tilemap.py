@@ -16,11 +16,11 @@ class TileMap(Component):
         else:
             self.tile_map = tile_map
 
-    def load_letters(self, tmap, tiles):
-        self.tile_map = [[] for _ in range(len(tmap))]
-        for i, row in enumerate(tmap):
+    def load_letters(self, tiles):
+        self.tile_map = [[] for _ in range(len(tiles))]
+        for i, row in enumerate(tiles):
             for col in row:
-                self.tile_map[i].append([Tile(self.tileset.tiles[tiles[t]], tiles[t]) for t in col])
+                self.tile_map[i].append([Tile(self.tileset.tiles[t], t, tiles) for t in col])
 
     def calculate_rects(self):
         pos = self.entity.get_component(TransformComponent).pos

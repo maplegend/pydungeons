@@ -66,7 +66,7 @@ wall_inner_corner_t_top_left 80 160 16 16
 wall_inner_corner_t_top_rigth 64 160 16 16
 
 edge 96 128 16 16
-hole  96 144 16 16
+hole 96 144 16 16
 
 doors_all 16 221 64 35
 doors_frame_left 16 224 16 32
